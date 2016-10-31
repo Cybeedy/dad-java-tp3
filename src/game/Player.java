@@ -1,15 +1,15 @@
-package goosegame;
+package game;
 /** A player in the "jeu de l'oie" game */
 public class Player {
     /** current cell of the player */
-    protected Cell cell;
+    protected CellInterface cell;
     /** name of the player*/
     protected String name;
     /** 
      * @param name the name of this player
      * @param cell the starting cell of this player
     */
-    public Player (String name, Cell cell){
+    public Player (String name, CellInterface cell){
         this.name = name;
         this.cell = cell;
     }
@@ -25,13 +25,13 @@ public class Player {
     /** returns the current cell of the player 
       *  @return the current cell of the player 
       */
-    public Cell getCell() { 
+    public CellInterface getCell() { 
        return this.cell ; 
     }
     /** changes the cell of the player 
      * @param newCell the new cell
     */
-    public void setCell(Cell newCell) { 
+    public void setCell(CellInterface newCell) { 
        this.cell = newCell; 
     }    
     /** result of a 1d6 throw

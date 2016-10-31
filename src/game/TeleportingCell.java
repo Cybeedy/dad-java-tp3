@@ -1,39 +1,34 @@
-package goosegame;
+package game;
 
-public class TeleportingCell implements Cell {
+public class TeleportingCell implements CellInterface {
 	private int index;
-	private int indexTeleport;
-	@Override
+	private int destination_cell_index;
+	
+	public TeleportingCell(int index, int destination_cell_index){
+		this.index = index;
+		this.destination_cell_index = destination_cell_index;
+	}
+	
 	public boolean canBeLeft() {
 		return true;
 	}
 
-	@Override
 	public int getIndex() {
 		return this.index;
 	}
 
-	@Override
 	public int handleMove(int diceThrow) {
-		
-		return indexTeleport;
+		return this.destination_cell_index;
 	}
 
-	@Override
 	public boolean isBusy() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void welcomePlayer(Player player) {
-		// TODO Auto-generated method stub
-
 	}
 
-	@Override
 	public Player getPlayer() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

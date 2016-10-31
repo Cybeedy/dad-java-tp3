@@ -1,10 +1,10 @@
-package goosegame;
+package game;
 
 /**
  * Interface for the cells of the "jeu de l'oie" game. <br/> Note that there can be only 
  * one player by cell, the starting cell (index 0) excepted.
  */
-public interface Cell {
+public interface CellInterface {
 	/**
 	 * @return <tt>true</tt> if and only if the player in this cell can freely
 	 *  leaves the cell, else he must wait for another player to reach this cell 

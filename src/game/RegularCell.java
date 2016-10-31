@@ -1,6 +1,6 @@
-package goosegame;
+package game;
 
-public class RegularCell implements Cell {
+public class RegularCell implements CellInterface{
 	private int index;
 	private Player player;
 	
@@ -8,31 +8,31 @@ public class RegularCell implements Cell {
 		return true;
 	}
 
-	
 	public int getIndex() {
-		return index;
+		return this.index;
 	}
-
 	
 	public int handleMove(int diceThrow) {
 		return getIndex();
 	}
 
-	
 	public boolean isBusy() {
 		if (this.getPlayer() == null){
 			return false;
 		}
 		else return true;
 	}
-
 	
 	public void welcomePlayer(Player player) {
 		System.out.println(player.toString() + "reached cell #" + getIndex());
+		CellInterface previous_cell = player.getCell(); // la case précédemment occupée par le joueur qui arrive
+		this.player.setCell(previous_cell); // le joueur actuel recule vers cette dernière
+		previous_cell.welcomePlayer(this.player);
+		this.player = player;
 	}
 
 	public Player getPlayer() {
-		return null;
+		return this.player;
 	}
 
 }
