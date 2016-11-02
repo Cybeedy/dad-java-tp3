@@ -2,21 +2,22 @@ package game;
 
 public abstract class Board {
 
-	private final int nbOfCells;
-	private CellInterface Cells[];
+	private final int nb_cells;
+	private CellInterface cells[];
 	
-	public Board(){
-		this.nbOfCells = 64;	
+	public Board(CellInterface cells[]){
+		this.cells = cells;
+		this.nb_cells = this.cells.length;
 	}
 
 	protected abstract void initBoard();
 
 	public int getNbOfCells() {
-		return this.nbOfCells;
+		return this.nb_cells;
 	}
 	
 	public CellInterface getCell(int num_cell){
-		return this.Cells[num_cell];
+		return this.cells[num_cell];
 	}
 	
 }

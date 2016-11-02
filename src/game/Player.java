@@ -1,7 +1,9 @@
 package game;
+import java.util.Random;
 /** A player in the "jeu de l'oie" game */
 public class Player {
-    /** current cell of the player */
+    private static Random random = new Random();
+	/** current cell of the player */
     protected CellInterface cell;
     /** name of the player*/
     protected String name;
@@ -20,6 +22,7 @@ public class Player {
     public Player (String name){
         this(name, null);
     }
+    
     /** */
     public String toString() { return name; }
     /** returns the current cell of the player 
@@ -38,13 +41,13 @@ public class Player {
      * @return random result of a 1d6 throw 
     */
     private int oneDieThrow() {	
-       return ((int) (Math.random()*10000) % 6)+ 1; 
+       return (Player.random.nextInt(6) + 1); 
     }
     /** result of a 2d6 throw 
       * @return random result of a 2d6 throw
     */ 	
     public int twoDiceThrow() {
-        int result = oneDieThrow() + oneDieThrow();
+        int result = this.oneDieThrow() + this.oneDieThrow();
         return result;
     }
 }// Player

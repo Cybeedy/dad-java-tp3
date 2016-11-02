@@ -4,6 +4,15 @@ public class RegularCell implements CellInterface{
 	private int index;
 	private Player player;
 	
+	public RegularCell(int index){
+		this.index = index;
+	}
+	
+	public RegularCell(int index, Player player){
+		this.index = index;
+		this.player = player;
+	}
+	
 	public boolean canBeLeft() {
 		return true;
 	}
