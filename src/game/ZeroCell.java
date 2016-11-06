@@ -1,26 +1,17 @@
 package game;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 
 public class ZeroCell implements CellInterface {
 	private int index = 0;
-	private List<Player> list_players;
-	private int nb_players_on; // Nombre de joueurs actuellement sur la case.
+	private ArrayList<Player> list_players;
 	
 	public ZeroCell(){
 	}
 	
 	public ZeroCell(List<Player> list_players){
-		this.list_players = list_players;
-		this.nb_players_on = list_players.size();
-	}
-		
-	public List<Player> getList_players() {
-		return this.list_players;
-	}
-
-	public void setList_players(List<Player> list_players) {
-		this.list_players = list_players;
+		this.list_players = new ArrayList<Player>(list_players);
 	}
 	
 	public boolean canBeLeft(){
@@ -44,13 +35,29 @@ public class ZeroCell implements CellInterface {
      * @param player the new player in the sell
      */
 	public void welcomePlayer(Player player){
+		CellInterface previous_cell = player.getCell(); // la case précédemment occupée par le joueur qui arrive
+		previous_cell.goodbyePlayer(player);
 		this.list_players.add(player);
+		player.setCell(this);
 	}
 
-	/** gets the player in this cell <tt>null</tt> if none */
+	public void goodbyePlayer(Player player){
+		index = this.list_players.indexOf(player);
+		if (index != -1){
+			this.list_players.remove(index);
+		}
+	}
+	
+	public String identificationMessage(){
+		return "ZeroCell";
+	}
+	
+	
+	/** gets the first player who came in this cell <tt>null</tt> if none */
 	public Player getPlayer(){
 		Iterator<Player> it = this.list_players.iterator();
-		return it.next();
+		if (it.hasNext()) return it.next();
+		else return null;
 	}
 	
 }

@@ -15,5 +15,5 @@ play()
 	}
 
 
-Q4 : Nous allons utiliser le concept de singleton pour la classe zeroCell afin de l'unicité de la case 0 sur un plateau donné.
+Q4 : 
 */

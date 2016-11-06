@@ -33,15 +33,26 @@ public class RegularCell implements CellInterface{
 	}
 	
 	public void welcomePlayer(Player player) {
-		System.out.println(player.toString() + "reached cell #" + getIndex());
 		CellInterface previous_cell = player.getCell(); // la case précédemment occupée par le joueur qui arrive
-		this.player.setCell(previous_cell); // le joueur actuel recule vers cette dernière
-		previous_cell.welcomePlayer(this.player);
+		previous_cell.goodbyePlayer(player);
+		if (this.isBusy()){
+			previous_cell.welcomePlayer(this.player);
+		}
+		
 		this.player = player;
+		this.player.setCell(this);
 	}
 
+	public void goodbyePlayer(Player player){
+		this.player = null;
+	}
+	
 	public Player getPlayer() {
 		return this.player;
 	}
 
+	public String identificationMessage(){
+		return "RegularCell";
+	}
+	
 }

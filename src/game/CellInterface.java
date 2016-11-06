@@ -34,6 +34,12 @@ public interface CellInterface {
      */
 	public void welcomePlayer(Player player);
 
+	public void goodbyePlayer(Player player);
+	
 	/** gets the player in this cell <tt>null</tt> if none */
 	public Player getPlayer();
+	
+	public String identificationMessage();
+	
+	
 }// Cell

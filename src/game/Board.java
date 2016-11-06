@@ -1,23 +1,22 @@
 package game;
+import java.util.List;
 
 public abstract class Board {
 
-	private final int nb_cells;
-	private CellInterface cells[];
+	protected final int nb_cells;
+	protected CellInterface cells[];
 	
-	public Board(CellInterface cells[]){
-		this.cells = cells;
-		this.nb_cells = this.cells.length;
+	public Board(int nb_cells){
+		this.nb_cells = nb_cells;
 	}
 
-	protected abstract void initBoard();
+	protected abstract void initBoard(List<Player> the_players);
 
-	public int getNbOfCells() {
+	public int getNbCells() {
 		return this.nb_cells;
 	}
 	
 	public CellInterface getCell(int num_cell){
 		return this.cells[num_cell];
 	}
-	
 }
