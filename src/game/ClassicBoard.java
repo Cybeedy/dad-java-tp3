@@ -1,16 +1,19 @@
 package game;
-import java.util.List;
 
+/** A class for the classic 63-cell board
+ */
 public class ClassicBoard extends Board {
 	
 	public ClassicBoard(int nb_cells){
 		super(nb_cells);
 	}
 	
-	public void initBoard(List<Player> the_players) {
+	/** This implementation of initBoard sets the (63 + 1) cells of the classic board.
+	 */
+	public void initBoard() {
 		this.cells = new CellInterface[this.nb_cells + 1]; // Création du tableau de cases (nb_cases + 1, on compte la case 0)
 		
-		this.cells[0] = new ZeroCell(the_players);
+		this.cells[0] = new ZeroCell();
 		this.cells[1] = new RegularCell(1);
 		this.cells[2] = new RegularCell(2);
 		this.cells[3] = new RegularCell(3);

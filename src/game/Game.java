@@ -2,6 +2,9 @@ package game;
 import java.util.List;
 import java.util.Iterator;
 
+
+/** A class to play the goose game.
+ */
 public class Game {
 
 	private List<Player> the_players;
@@ -17,9 +20,11 @@ public class Game {
 	}
 	
 	public void play(){
-		int nb_cells = this.board.getNbCells();
+		int end_cell_index = this.board.getNbCells(); // Numéro de la dernière case
+		System.out.println(end_cell_index);
+		CellInterface end_cell = board.getCell(end_cell_index); // La dernière case
 		boolean game_blocked = false; // Malgré les consignes, on vérifiera que la partie n'est pas bloquée (tous les joueurs prisonniers)
-		int nb_players_blocked; 
+		int nb_players_blocked; // Après chaque itération sur l'ensemble des joueurs, on regarde si le nombre de joueurs bloqués est égal au nombre de joueurs (partie bloquée)
 		Iterator<Player> it;
 		Player player;
 		String name_player;
@@ -29,11 +34,9 @@ public class Game {
 		CellInterface new_cell;
 		int new_cell_index;
 		String new_cell_identification_message;
-		CellInterface end_cell = board.getCell(nb_cells);
 		int two_dice_throw;
-		while (end_cell.isBusy() == false && game_blocked == false){ // La dernière case du plateau doit être occupée pour qu'un joueur l'emporte
+		while (end_cell.isBusy() == false && game_blocked == false){ // On arrête la partie si un joueur atteint la dernière case ou si la partie est bloquée.
 			it = this.the_players.iterator();
-			nb_players_blocked = 0;
 			while (it.hasNext()){
 				player = it.next();
 				name_player = player.getName();
@@ -71,8 +74,8 @@ public class Game {
 						two_dice_throw = player.twoDiceThrow();
 						new_cell_index = old_cell_index + two_dice_throw;
 						System.out.print("throws " + two_dice_throw + ", ");
-						if (new_cell_index > nb_cells){
-							new_cell_index = 2*nb_cells - new_cell_index;
+						if (new_cell_index > end_cell_index){
+							new_cell_index = 2*end_cell_index - new_cell_index;
 							System.out.print("exceeds the number of cells, so goes back to cell ");
 							player.setGoingFoward(false);
 						}
@@ -88,10 +91,18 @@ public class Game {
 								System.out.print(" (regular)\n");
 								break;
 							case "GooseCell":
+								System.out.print(" (goose), ");
 								if (!player.isGoingForward()){	
 									new_cell_index -= 2 * two_dice_throw;
+									System.out.print("and goes back to cell " + new_cell_index);
 								}
-								System.out.print(" (goose), jumps to cell " + new_cell_index + "\n");
+								else{ 
+									if (new_cell_index > end_cell_index){
+									new_cell_index = 2*end_cell_index - new_cell_index;
+									System.out.print("exceeds the number of cells, so goes back to cell " + new_cell_index + "\n");;
+									}
+									else System.out.print("jumps to cell " + new_cell_index + "\n");
+								}
 								break;
 							case "TeleportingCell":
 								System.out.print(" (teleporting), is teleported to cell " + new_cell_index + "\n");
@@ -107,11 +118,8 @@ public class Game {
 						}
 						new_cell = board.getCell(new_cell_index);
 						new_cell.welcomePlayer(player);
-						if (new_cell.canBeLeft() == false){
-							nb_players_blocked += 1;
-						}
 						
-						if (new_cell_index == 63){
+						if (new_cell_index == end_cell_index){
 							break;
 						}
 					}
@@ -121,7 +129,16 @@ public class Game {
 					player.setGoingFoward(true);
 			}
 			
-			if (nb_players_blocked == the_players.size()){
+			it = this.the_players.iterator();
+			nb_players_blocked = 0;
+			while (it.hasNext()){
+				player = it.next();
+				if (player.getCell().canBeLeft() == false){
+					nb_players_blocked += 1;
+				}
+			}
+			
+			if (nb_players_blocked == this.the_players.size()){
 				game_blocked = true;
 			}
 		}

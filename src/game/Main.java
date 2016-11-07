@@ -41,7 +41,7 @@ public class Main {
 			System.out.println("Which game board would you like to use?\n" + 
 			"1 --> Original 63-cell board\n" +
 					"2 --> Randomly created board\n" +
-					"3 --> Manually created board (extremely fastidious for now)\n");
+					"3 --> Manually created board (extremely fastidious for now)");
 			
 			int type_plateau = ask_int_user(1, 4);
 			Board board;
@@ -50,24 +50,24 @@ public class Main {
 			switch (type_plateau){
 				case 1:
 					board = new ClassicBoard(63);
-					board.initBoard(the_players);
+					board.initBoard();
 					break;
 				case 2:
-					System.out.println("How many cells do you want in your board (between 32 and 128 included)?");
+					System.out.println("\nHow many cells do you want in your board (between 32 and 128 included)?");
 					nb_cases = ask_int_user(32,129);
 					board = new RandomBoard(nb_cases);
-					board.initBoard(the_players);
+					board.initBoard();
 					break;
 				case 3:
-					System.out.println("How many cells do you want in your board (between 32 and 128 included)?");
+					System.out.println("\nHow many cells do you want in your board (between 32 and 128 included)?");
 					nb_cases = ask_int_user(32,129);
 					board = new ManualBoard(nb_cases);
-					board.initBoard(the_players);
+					board.initBoard();
 					break;
 				default: // Ce cas ne se produira jamais, mais sans le default,
 						 // Eclipse suggère que board pourrait ne pas être initialisé, ce qui n'est pourtant pas le cas.
 					board = new ClassicBoard(63);
-					board.initBoard(the_players);
+					board.initBoard();
 					break;
 			}
 			

@@ -1,5 +1,8 @@
 package game;
 
+/**
+ * A class for waiting cells, in the which a player will be trapped for a given number of rounds.
+ */
 public class WaitingCell implements CellInterface {
 	private int index;
 	private int initial_waiting_time; // nombre de tours à attendre avant qu'un joueur ne puisse quitter la case
@@ -34,15 +37,14 @@ public class WaitingCell implements CellInterface {
 	}
 
 	public void welcomePlayer(Player player) {
-		player.setWaiting_time(this.getInitial_waiting_time());
 		CellInterface previous_cell = player.getCell(); // la case précédemment occupée par le joueur qui arrive
-		previous_cell.goodbyePlayer(player);
-		if (this.isBusy()){
-			previous_cell.welcomePlayer(this.player);
+		previous_cell.goodbyePlayer(player); // le joueur qui arrive dans this doit d'abord quitter sa case
+		if (this.isBusy()){ // si this est occupé
+			previous_cell.welcomePlayer(this.player); // la case précédente du joueur qui arrive reçoit le joueur déjà présent dans la case this (on procède à un échange)
 		}
-		
-		this.player = player;
-		this.player.setCell(this);
+		this.player = player; // this reçoit le joueur qui arrive
+		this.player.setCell(this); // on met à jour la case du joueur qui vient d'arriver dans this
+		this.player.setWaiting_time(this.initial_waiting_time); // le joueur va devoir attendre initial_waiting_time tours.
 	}
 
 	public void goodbyePlayer(Player player){

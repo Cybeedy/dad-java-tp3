@@ -1,5 +1,9 @@
 package game;
-import java.util.List;
+
+/** An abstract class for a board in the goose game.
+ * Different derived classes will implement different types of boards (classic, randomly generated, etc.)
+ * through the implementation of the initBoard method.
+ */
 
 public abstract class Board {
 
@@ -10,7 +14,10 @@ public abstract class Board {
 		this.nb_cells = nb_cells;
 	}
 
-	protected abstract void initBoard(List<Player> the_players);
+	/** A method to set the cells vector. The behavior of this method
+	 * determines the type of board that will be played with.
+	 */
+	protected abstract void initBoard();
 
 	public int getNbCells() {
 		return this.nb_cells;

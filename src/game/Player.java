@@ -7,8 +7,9 @@ public class Player {
     protected CellInterface cell;
     /** name of the player*/
     protected String name;
-    private int waiting_time;
-    private boolean going_forward;
+    private int waiting_time; // le temps d'attente restant est un attribut de joueur. cela est beaucoup plus facile à gérer que d'en faire un attribut des cases d'attente.
+    private boolean going_forward; // variable utilisée dans le cas d'un dépassement théorique du plateau (au lancer de dès). si, lorsque le joueur recule,
+    							   // il tombe sur une case oie, il ne doit pas rebondir vers l'avant, mais vers l'arrière.
     
 	/** 
      * @param name the name of this player

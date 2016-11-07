@@ -1,17 +1,18 @@
 package game;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 
+/**
+ * A class for the special cell 0, on the which every player begins.
+ * Actually, this class doesn't have any attribute list_players, since it is not necessary to know
+ * the players on this cell. Indeed :
+ * - in the Game.play method, the iteration is made on the full player_list...
+ * 		- ...which is already an attribute of the Game class
+ * 		- ...each player knows on which cell he/she is located.		
+ * - the 0 cell is never full. Hence, moving a player to the 0 cell never causes any issue (in the other cells, it is necessary to know if another player is already in it in order to make a switch if that's thecase or simply move the player if not)
+ */
 public class ZeroCell implements CellInterface {
 	private int index = 0;
-	private ArrayList<Player> list_players;
-	
+
 	public ZeroCell(){
-	}
-	
-	public ZeroCell(List<Player> list_players){
-		this.list_players = new ArrayList<Player>(list_players);
 	}
 	
 	public boolean canBeLeft(){
@@ -26,38 +27,28 @@ public class ZeroCell implements CellInterface {
 		return this.index;
 	}
 
-	/** returns <tt>true</tt> iff a player is in this cell */
 	public boolean isBusy(){
 		return false; // quelque soit le cas de figure, la case 0 n'est jamais pleine, donc on renvoit false.
 	}
 
-	 /**  handles what happens when a player arrives in this cell 
-     * @param player the new player in the sell
-     */
 	public void welcomePlayer(Player player){
 		CellInterface previous_cell = player.getCell(); // la case précédemment occupée par le joueur qui arrive
-		previous_cell.goodbyePlayer(player);
-		this.list_players.add(player);
-		player.setCell(this);
+		previous_cell.goodbyePlayer(player); // le joueur qui arrive dans this quitte son ancienne case
+		player.setCell(this); // mise à jour de l'attribut cell du joueur.
+		
+		// Cette méthode, contrairement aux méthodes welcomePlayer des autres classes,
+		// ne nécessite pas de mettre à jour un attribut (qui n'existe d'ailleurs pas) list_players (cf. JavaDoc).
 	}
 
 	public void goodbyePlayer(Player player){
-		index = this.list_players.indexOf(player);
-		if (index != -1){
-			this.list_players.remove(index);
-		}
 	}
 	
 	public String identificationMessage(){
 		return "ZeroCell";
 	}
 	
-	
-	/** gets the first player who came in this cell <tt>null</tt> if none */
 	public Player getPlayer(){
-		Iterator<Player> it = this.list_players.iterator();
-		if (it.hasNext()) return it.next();
-		else return null;
+		return null;
 	}
 	
 }

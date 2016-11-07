@@ -1,5 +1,7 @@
 package game;
-
+/**
+ * A class for trap cells, on the which a player will stay trapped until another player takes his/her place.
+ */
 public class TrapCell implements CellInterface {
 	private int index;
 	private Player player = null;
@@ -29,13 +31,12 @@ public class TrapCell implements CellInterface {
 
 	public void welcomePlayer(Player player) {
 		CellInterface previous_cell = player.getCell(); // la case précédemment occupée par le joueur qui arrive
-		previous_cell.goodbyePlayer(player);
-		if (this.isBusy()){
-			previous_cell.welcomePlayer(this.player);
+		previous_cell.goodbyePlayer(player); // le joueur qui arrive dans this doit d'abord quitter sa case
+		if (this.isBusy()){ // si this est occupé
+			previous_cell.welcomePlayer(this.player); // la case précédente du joueur qui arrive reçoit le joueur déjà présent dans la case this (on procède à un échange)
 		}
-		
-		this.player = player;
-		this.player.setCell(this);
+		this.player = player; // this reçoit le joueur qui arrive
+		this.player.setCell(this); // on met à jour la case du joueur qui vient d'arriver dans this
 	}
 
 	public void goodbyePlayer(Player player){
